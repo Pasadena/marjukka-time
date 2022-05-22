@@ -6,8 +6,19 @@
 		selectedTime = event.detail
 	}
 	async function onSubmit(e: any) {
-		const formData = new FormData(e.target)
-		console.log("FORM DATA", formData, selectedTime)
+		console.log("FORM DATA", selectedTime)
+		try {
+			await fetch('https://9bc8zpr105.execute-api.eu-west-1.amazonaws.com/marjukanaika-mailsender', {
+			method: 'POST',
+			body: JSON.stringify({time: selectedTime}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		} catch(e) {
+			console.log("Cannot send email", e)
+		}
+		
 	}
 </script>
 
