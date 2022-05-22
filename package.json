@@ -25,6 +25,7 @@
     "@tsconfig/svelte": "^2.0.0"
   },
   "dependencies": {
+    "@zerodevx/svelte-toast": "^0.7.1",
     "sirv-cli": "^2.0.0",
     "svelty-picker": "^1.3.0"
   }
