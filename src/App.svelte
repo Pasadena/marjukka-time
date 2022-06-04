@@ -2,20 +2,15 @@
 	import SveltyPicker from 'svelty-picker'
 	import { SvelteToast, toast } from '@zerodevx/svelte-toast';
 	import { success, failure } from './toasts'
+	import { makeReservation } from './api'
 
 	async function onSubmit(e: any) {
-		const response = await fetch('https://9bc8zpr105.execute-api.eu-west-1.amazonaws.com/marjukanaika-mailsender', {
-			method: 'POST',
-			body: JSON.stringify({ time: e.target[0].value }),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
-		if (response.ok) {
-			success("Booked some Marjukka-time!")
-		} else {
-			failure("Yikes, something went wrong while booking time!")
-		}	
+		try {
+			await makeReservation(e.target[0].value)
+			success("Booked some Marjukka-time!");
+		} catch (e) {
+			failure("Yikes, something went wrong while booking time!");
+		}
 	}
 </script>
 
