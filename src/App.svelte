@@ -2,29 +2,20 @@
 	import SveltyPicker from 'svelty-picker'
 	import { SvelteToast, toast } from '@zerodevx/svelte-toast';
 	import { success, failure } from './toasts'
-	let selectedTime;
 
-	const toastOptions = {}
-
-	function setSelectedTime(event) {
-		selectedTime = event.detail
-	}
 	async function onSubmit(e: any) {
 		const response = await fetch('https://9bc8zpr105.execute-api.eu-west-1.amazonaws.com/marjukanaika-mailsender', {
 			method: 'POST',
-			body: JSON.stringify({ time: selectedTime }),
+			body: JSON.stringify({ time: e.target[0].value }),
 			headers: {
 				'Content-Type': 'application/json'
 			}
 		})
-		console.log("RESPONSE", response)
 		if (response.ok) {
 			success("Booked some Marjukka-time!")
 		} else {
-			console.log("Cannot send email", e)
 			failure("Yikes, something went wrong while booking time!")
-		}
-		
+		}	
 	}
 </script>
 
@@ -34,11 +25,11 @@
 	<form on:submit|preventDefault={onSubmit}>
 		<label for="time" class="time-select">
 			<span>Valittu aika:</span>
-			<SveltyPicker format="dd.mm.yyyy hh:mm" name="time" required on:change={setSelectedTime}></SveltyPicker>
+			<SveltyPicker format="dd.mm.yyyy hh:ii"  name="time" required />
 		</label>
 		<button type="submit">Varaa!</button>
 	</form>
-	<SvelteToast options={toastOptions} />
+	<SvelteToast options={{}} />
 </main>
 
 <style>
